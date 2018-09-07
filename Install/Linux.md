@@ -6,8 +6,7 @@ The box I used was an Ubuntu 16.04
 
 ## Pre-requisites
 
-Python3.5 or later is needed, as well as matching pip.  
-For some recent node versions or branches, Python 3.6 may be needed.
+Python3.6 or later is needed, as well as matching pip.  
 
 If you need to install a version above what your system ships with, it's recommended to use pyenv.  
 https://askubuntu.com/questions/865554/how-do-i-install-python-3-6-using-apt-get#865569  
@@ -39,16 +38,16 @@ It's advised to use the releases rather than current git code.
 Current github code may contain untested features and code. 
 
 Head over to the official Bismuth Github repo, releases: https://github.com/hclivess/Bismuth/releases  
-Unless you need a specific version, pick the latest one. As for now, this is 4.2.5.1.  
-Copy the link of the "Source Code (tar.gz)" file. Mine is https://github.com/hclivess/Bismuth/archive/4.2.5.1.tar.gz
+Unless you need a specific version, pick the latest one. As for now, this is 4.2.6.  
+Copy the link of the "Source Code (tar.gz)" file. Mine is https://github.com/hclivess/Bismuth/archive/4.2.6.tar.gz
 
 Back to your Ubuntu box, fetch the file where you want it installed, like your home dir, and extract it:
 ```
 cd
-wget https://github.com/hclivess/Bismuth/archive/4.2.5.1.tar.gz
-tar -zxvf 4.2.5.1.tar.gz
+wget https://github.com/hclivess/Bismuth/archive/4.2.6.tar.gz
+tar -zxvf 4.2.6.tar.gz
 ```
-It extracts itself under Bismuth-4.2.5.1
+It extracts itself under Bismuth-4.2.6
 
 ## Node only
 
@@ -60,7 +59,7 @@ pip3 install -r requirements-node.txt
 
 You may want to edit your config, or just run the node with defaults, and let it sync. Here, I first run a screen, then run the node inside the screen  
 ```
-screen -s NODE
+screen -S NODE
 python3 node.py
 ```
 Then no matter what happens to the ssh connection, I can find my running node when I need to with a `screen -x NODE`.  
@@ -77,23 +76,33 @@ It will try to connect to your local node first, then try online servers. That i
 
 Here are the python modules for the node again, from previous paragraph
 ```
-pip3 install -r requirements-node.py
+pip3 install -r requirements-node.txt
 ```
 
 And here are the extra modules currently needed for the wallet:
 ```
-pip3 install -r requirementS.txt
+pip3 install -r requirements.txt
+```
+
+If you want to run Bismuth-wallet on Ubuntu 18.04, you additionally need to install
+```
+sudo apt install python3-tk
+```
+
+If you want to test wallet_async.py (should perform better, due to non blocking behaviour when wallet gets information form node or wallet-server), you need to add:
+```
+pip3 install tornado
 ```
 
 ## OS config
 
 ### limits
 On the node box, be sure to have enough files limits (replace root by the user the node will run under)
-...
+```
 nano /etc/security/limits.conf
 root soft nofile 65535
 root hard nofile 65535
-...
+```
 
 ```
 nano /etc/sysctl.conf
